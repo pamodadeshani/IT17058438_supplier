@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Edit supplier details</title>
+<style>
+body{
+    background-color:#D8D8D8;
+}
+</style>
+</head>
+<body >
+
+	   <div align="center">
+        <form  action="#" th:action="@{/save}" th:object="${supplier}" method="post" >
+            <h1 align="center"> Edit Supplier Details </h1>
+            <table >
+                <tr>
+                    <td>Supplier ID</td>
+                    <td><input type="text" th:field="*{id}" readonly="readonly" /> </td>
+                </tr>
+                 <tr>
+                    <td>Supplier Name</td>
+                        <td><input type="text" th:field="*{name}"/> </td>
+        
+                </tr>
+              
+                <tr>
+                    <td>Product Name</td>
+                       <td><input type="text" th:field="*{product}"/> </td>
+                </tr>
+                <tr>
+                    <td>Company Name:</td>
+                       <td><input type="text" th:field="*{company}"/> </td>
+                </tr>
+                 <tr>
+                    <td>Email</td>
+                         <td><input type="text" th:field="*{email}"/> </td>
+                </tr>
+                <tr>
+                   
+                    <td><input type="reset" value="Reset"></td>
+                    <td colspan="2"><button type="submit">Save</button></td> 
+</tr>
+</table>
+</form></div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Supplier Manager</title>
+<style>
+body{
+    background-color:#D8D8D8;
+}
+</style>
+</head>
+<body >
+<div align="center">
+
+
+<h1> Supplier Manager</h1>
+
+<a href="new">Create New Supplier</a>
+<br/><br/>
+ <table border="1"cellpadding="10">
+<thead>
+	<tr>
+	<th> Supplier ID </th>
+	<th> Supplier Name </th>
+	<th> Company Name </th>
+	<th> Product Name </th>
+	<th> Email </th>
+	<th> Actions</th>
+</thead>
+<tbody>
+		<tr th:each ="supplier : ${listSuppliers}">
+		<td th:text="${supplier.id}"> Supplier ID</td>
+		<td th:text="${supplier.name}"> Supplier Name</td>
+		<td th:text="${supplier.company}">Company Name </td>
+		<td th:text="${supplier.product}">Product Name</td>
+		<td th:text="${supplier.email}"> Email</td>
+		<td>
+		<a th:href="@{'/edit/' + ${supplier.id}}" >EDIT</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a th:href="@{'/delete/' + ${supplier.id}}" >DELETE</a>
+</tbody>
+
+</table>
+</div>
+<div>
+  <img src="s.ico"  width="30px" height="30px">
+</div>
+
+<script>
+$(document).on("click","#btnLogin",function(){
+	$("#divStsMsgInsert").html("");
+	var result = isValidFormInsert();
+	
+	if(result == "true"){
+		$.ajax(
+		{
+			type:"post",
+			url : "new_supplier",
+			data : $("#formInsert").serialize(),
+			complete : function(response,status){
+				onLoginComplete(response.responseText,status);
+			}
+		});		
+		
+	}
+	else{
+		$("#disStsMsgInsert").html(result);
+	}
+	});
+
+function onInsertComplete(response,status){
+	if(status == "success")
+		{
+		if(response = "SUCCESS"){
+			document.location = "new_supplier.jsp";
+		}
+		else{
+			$("#divStsMsgInsert").html(response);
+		}
+		
+		}
+	else if(status == "error"){
+		$("#divStsMsgInsert").html("Error while authenticating");
+		
+	}
+	else{
+		$("#divStsMsgInsert").html("unknown error while authenticating");
+		
+	}
+}
+
+$(document).con("click", ""#btnRefresh", function){
+		$("#divStsMsgSupplier").html("Loading...........");
+	
+		$.ajax(
+		{
+				type : "get",
+				url : "New_supplier",
+				complete : function(response,status){
+					
+					onRefreshComplete(response.responseText,status);
+				}
+					
+					
+		});
+});
+
+function onRefreshComplete(response,status)
+{
+	if(status == "success"){
+		$("#divsupplierTable").html("Loaded successfully");
+	}
+	elseif(status == "success"){
+		$("#divsupplierTable").html(response);
+		$("#divStsMsgSupplier".html("Loaded successfully");
+		
+	}
+	else if(status = "error"){
+		$("#divStsMsgSupplier").html("Error while authenticating");
+		
+	}
+	else{
+		$("#divStsMsgLogin").html("unknown error while authenticating");
+	}
+	}
+ 
+</script>
+</body>
+</html>
